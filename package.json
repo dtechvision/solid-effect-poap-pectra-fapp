@@ -2,7 +2,8 @@
   "private": true,
   "scripts": {
     "dev": "bun src/dev.ts start",
-    "build": "bun src/dev.ts build"
+    "build": "bun src/dev.ts build",
+    "start": "bun run build && bun out/server/server.js"
   },
   "dependencies": {
     "@effect/platform": "^0",

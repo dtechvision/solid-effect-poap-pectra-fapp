@@ -4,18 +4,12 @@ import { Effect, Layer, pipe } from "effect"
 import { Bundle, HttpAppExtra } from "effect-bundler"
 import { SsrApp } from "./Ssr.tsx"
 
+import { manifest } from "./miniapp/manifest.ts"
+
 const ApiApp = HttpRouter.empty.pipe(
   HttpRouter.get(
-    "/yo",
-    HttpServerResponse.text("yo"),
-  ),
-  HttpRouter.get(
-    "/error",
-    Effect.gen(function*() {
-      throw new Error("custom error")
-
-      return HttpServerResponse.text("this will never be reached")
-    }),
+    "/.well-known/farcaster.json",
+    HttpServerResponse.json(manifest),
   ),
   HttpRouter.mountApp(
     "/.bundle",

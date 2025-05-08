@@ -26,12 +26,8 @@ bun install
 
 
 # start a development server
-bun start
+bun run dev
 ```
-
-# Development
-
-
 
 # Production
 

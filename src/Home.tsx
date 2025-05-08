@@ -1,7 +1,7 @@
 import { createEffect, createSignal } from "solid-js";
 import sdk from "@farcaster/frame-sdk";
 import type { Context } from '@farcaster/frame-core';
-import { createWalletClient, custom, parseEther, type WalletClient } from 'viem'
+import { createWalletClient, custom, parseEther, type WalletClient, type Hash } from 'viem'
 import { base } from "viem/chains";
 
 export default function Home() { 
@@ -9,6 +9,7 @@ export default function Home() {
   const [context, setContext] = createSignal<Context.FrameContext>();
   const [client, setClient] = createSignal<WalletClient>();
   const [address, setAddress] = createSignal<`0x${string}` | undefined>();
+  const [isLoading, setIsLoading] = createSignal(false);
 
   // Farcaster Mini App Integration
   createEffect(() => {
@@ -39,7 +40,14 @@ export default function Home() {
   })
   // end Farcaster Injected Wallet Integration
 
-  const mintPoap = async (amount: number) => {
+  const shareCast = async () => {
+    sdk.actions.composeCast({
+      text: 'To celebrate the Pectra Mainnet Launch I just minted the new POAP! Get yours too and support ETH Stakers wohoooo! Thanks @gabo and @samuellhuber.eth https://pectra.dtech.vision',
+      close: true,
+    })
+  };
+
+  const mintPoap = async (amount: string) => {
     const currentClient = client()
     const currentAddress = address()
     
@@ -48,14 +56,23 @@ export default function Home() {
       return
     }
 
-    const hash = await currentClient.sendTransaction({
-      account: currentAddress,
-      chain: base,
-      to: '0xA1DD0b787E5ee1fe2C50cEcb5560b543527F4053', 
-      value: parseEther(amount.toString())
-    })
-    
-    return hash
+    try {
+      setIsLoading(true)
+      const hash = await currentClient.sendTransaction({
+        account: currentAddress,
+        chain: base,
+        to: '0xA1DD0b787E5ee1fe2C50cEcb5560b543527F4053', 
+        value: parseEther(amount.toString())
+      })
+  
+      await shareCast(); 
+      return hash
+    } catch (error) {
+      console.error('Transaction failed:', error)
+      window.alert(error instanceof Error ? error.message : 'Transaction failed. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -71,6 +88,11 @@ export default function Home() {
             class="poap-text"
             src="https://ethereumupgrades.com/assets/img/poap.png"
             alt="POAP Text"
+          />
+          <img
+            style={{ height: '60px' }}
+            src="https://dtech.vision/favicon.svg"
+            alt="dTech Logo"
           />
         </h2>
         <div class="poap-directions">
@@ -124,10 +146,11 @@ export default function Home() {
             <div class="poap-details">
               <button
                 type="button"
-                onClick={() => mintPoap(0.005)}
+                disabled={isLoading()}
+                onClick={() => mintPoap('0.005')}
                 class="poap-airship-button"
               >
-                Mint POAP
+                {isLoading() ? 'Minting...' : 'Mint POAP'}
               </button>
             </div>
           </div>
@@ -160,27 +183,16 @@ export default function Home() {
             </div>
             <div class="poap-cost">0.05 ETH for 3 POAPs</div>
             <div class="poap-details">
-              <a
-                href="https://airship.poap.xyz/pectra-mainnet-supporter-edition"
-                target="_blank"
-                rel="noreferrer"
+              <button
+                type="button"
+                disabled={isLoading()}
+                onClick={() => mintPoap('0.05')}
                 class="poap-airship-button"
               >
-                Mint POAP
-              </a>
+                {isLoading() ? 'Minting...' : 'Mint POAP'}
+              </button>
             </div>
           </div>
-        </div>
-        <div class="poap-sponsor">
-          <strong>POAP mint mini app powered by dTech</strong>
-          <br />
-          <a href="https://dtech.vision" target="_blank" rel="noreferrer">
-            <img
-              class="poap-sponsor-img"
-              src="https://dtech.vision/favicon.svg"
-              alt="dTech Logo"
-            />
-          </a>
         </div>
 
         <style>
@@ -293,13 +305,13 @@ export default function Home() {
               border-radius: 32px !important;
               box-shadow: -6px 8px #ecebff !important;
               padding: 16px;
-              transition: translate 0.3s ease, box-shadow 0.3s ease !important;
+              transition: all 0.3s ease !important;
               background: var(--card);
             }
 
             .poap-option-card:hover {
               box-shadow: -12px 14px #ecebff !important;
-              translate: 6px -6px;
+              transform: translate(6px, -6px);
             }
 
             .poap-img-wrapper {

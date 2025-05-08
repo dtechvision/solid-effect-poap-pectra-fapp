@@ -8,7 +8,7 @@ const fcMetadata: FrameEmbedNext = {
     action: {
       type: "launch_frame",
       name: "Pectra POAP",
-      url: new URL("https://lazy-components-development-eclipse.trycloudflare.com/"),
+      url: new URL("https://pectra.dtech.vision"),
       splashImageUrl: new URL("https://ethereumupgrades.com/assets/img/backgrounds/pectra2.png"),
       splashBackgroundColor: "#f7f7f7",
     },
