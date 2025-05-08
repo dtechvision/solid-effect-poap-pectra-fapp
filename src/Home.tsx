@@ -131,14 +131,14 @@ export default function Home() {
         <style>
           {`
             :root {
-              --bg: 245, 246, 250;
+              --bg: 255, 254, 246;
               --card: #ffffff;
-              --text: #2c2f36;
-              --accent-text: #7c3aed;
-              --accent-bg: #f0ebff;
-              --accent-border: #c5b3f8;
-              --accent-text-hover: #9f5bff;
-              --accent-bg-hover: #e2d9ff;
+              --text: #966103;
+              --accent-text: #b8810c;
+              --accent-bg: #f8f0d3;
+              --accent-border: #b8810c;
+              --accent-text-hover: #dcae0e;
+              --accent-bg-hover: #f6e8b4;
               --shadow: rgba(0, 0, 0, 0.05);
               --border: #dfe3ec;
               --font-main: 'Inter', 'Segoe UI', sans-serif;
@@ -147,7 +147,7 @@ export default function Home() {
             body {
               font-family: var(--font-main);
               color: var(--text);
-              background: #fff;
+              background: rgba(255,254,246,100);
             }
 
             .card {
@@ -164,7 +164,7 @@ export default function Home() {
               margin: 0 auto;
               margin-top: 2rem;
               margin-bottom: 2rem;
-              background-image: linear-gradient(rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.97)), url(/assets/img/poap-bg.svg);
+              background-image: linear-gradient(rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.97)), url(https://ethereumupgrades.com/assets/img/poap-bg.svg);
               background-repeat: no-repeat;
               background-position: center;
               background-size: cover;
@@ -196,6 +196,21 @@ export default function Home() {
               margin-top: 1rem;
             }
 
+            .poap-directions li {
+              margin: 10px 0;
+            }
+
+            a {
+              color: var(--accent-text);
+              font-weight: 500;
+              text-decoration: none;
+            }
+
+            a:hover {
+              color: var(--accent-text-hover);
+              text-decoration: none;
+            }
+
             .ethstaker-link {
               color: #6d62df;
               text-decoration: none;
@@ -208,8 +223,10 @@ export default function Home() {
 
             .poap-options {
               display: flex;
-              gap: 2rem;
               justify-content: center;
+              flex-wrap: wrap;
+              align-items: center;
+              gap: 25px;
               margin-bottom: 2rem;
               flex-wrap: wrap;
             }
@@ -217,15 +234,16 @@ export default function Home() {
             .poap-option-card {
               flex: 1;
               max-width: 450px;
-              border: 1px solid #473e6b;
-              border-radius: 32px;
-              box-shadow: -6px 8px #ecebff;
+              border: 1px solid #473e6b !important;
+              border-radius: 32px !important;
+              box-shadow: -6px 8px #ecebff !important;
               padding: 16px;
-              transition: translate 0.3s ease, box-shadow 0.3s ease;
+              transition: translate 0.3s ease, box-shadow 0.3s ease !important;
+              background: var(--card);
             }
 
             .poap-option-card:hover {
-              box-shadow: -12px 14px #ecebff;
+              box-shadow: -12px 14px #ecebff !important;
               translate: 6px -6px;
             }
 
@@ -240,11 +258,15 @@ export default function Home() {
               margin-bottom: 1rem;
             }
 
+            .poap-img-wrapper a {
+              text-decoration: none !important;
+            }
+
             .poap-img {
               width: 120px;
               height: 120px;
               border-radius: 50%;
-              transition: transform 0.2s;
+              transition: transform 0.2s ease;
             }
 
             .poap-img:hover {
@@ -268,14 +290,15 @@ export default function Home() {
               color: white;
               padding: 0.75rem 2rem;
               border-radius: 50px;
-              text-decoration: none;
+              text-decoration: none !important;
               font-weight: 500;
-              transition: background-color 0.2s;
+              transition: all 0.2s ease;
               display: inline-block;
             }
 
             .poap-airship-button:hover {
               background: #6d28d9;
+              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
               color: white;
               text-decoration: none;
             }
@@ -299,6 +322,10 @@ export default function Home() {
               .poap-img-wrapper {
                 flex-direction: column;
                 align-items: center;
+              }
+              
+              .poap-img-wrapper a:not(:first-child) {
+                margin-top: 1rem;
               }
             }
           `}
