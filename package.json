@@ -1,5 +1,6 @@
 {
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "bun src/dev.ts start",
     "build": "bun src/dev.ts build",
