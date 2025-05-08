@@ -1,10 +1,14 @@
 import { createEffect, createSignal } from "solid-js";
 import sdk from "@farcaster/frame-sdk";
 import type { Context } from '@farcaster/frame-core';
+import { createWalletClient, custom, parseEther, type WalletClient } from 'viem'
+import { base } from "viem/chains";
 
 export default function Home() { 
   const [isSDKLoaded, setIsSDKLoaded] = createSignal(false);
   const [context, setContext] = createSignal<Context.FrameContext>();
+  const [client, setClient] = createSignal<WalletClient>();
+  const [address, setAddress] = createSignal<`0x${string}` | undefined>();
 
   // Farcaster Mini App Integration
   createEffect(() => {
@@ -18,6 +22,41 @@ export default function Home() {
     }
   });
   // end Farcaster Mini App Integration
+
+  // Farcaster Injected Wallet Integration
+  createEffect(async () => {
+    const walletClient = createWalletClient({
+      account: address(),
+      chain: base,
+      transport: custom(sdk.wallet.ethProvider)
+    })
+    setClient(walletClient)
+
+    // you may want to change the below to another address or use requestAddresses()
+    // see https://viem.sh/docs/clients/wallet
+    const addresses = await walletClient.getAddresses()
+    setAddress(addresses[0])
+  })
+  // end Farcaster Injected Wallet Integration
+
+  const mintPoap = async (amount: number) => {
+    const currentClient = client()
+    const currentAddress = address()
+    
+    if (!currentClient || !currentAddress) {
+      console.error('Wallet client or address not initialized')
+      return
+    }
+
+    const hash = await currentClient.sendTransaction({
+      account: currentAddress,
+      chain: base,
+      to: '0xA1DD0b787E5ee1fe2C50cEcb5560b543527F4053', 
+      value: parseEther(amount.toString())
+    })
+    
+    return hash
+  }
 
   return (
     <div class="mt-10">
@@ -40,7 +79,7 @@ export default function Home() {
             <strong>
               send at least the listed amount to{" "}
               <a
-                href="https://etherscan.io/address/poap.ethstaker.eth"
+                href="https://basescan.org/address/poap.ethstaker.eth"
                 target="_blank"
                 rel="noreferrer"
                 class="ethstaker-link"
@@ -83,14 +122,13 @@ export default function Home() {
             </div>
             <div class="poap-cost">0.005 ETH for 2 POAPs</div>
             <div class="poap-details">
-              <a
-                href="https://airship.poap.xyz/pectra-mainnet-upgrade"
-                target="_blank"
-                rel="noreferrer"
+              <button
+                type="button"
+                onClick={() => mintPoap(0.005)}
                 class="poap-airship-button"
               >
                 Mint POAP
-              </a>
+              </button>
             </div>
           </div>
           <div class="card poap-option-card">
