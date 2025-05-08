@@ -72,7 +72,7 @@ export default function Home() {
                 rel="noreferrer"
                 class="poap-airship-button"
               >
-                POAP Airship
+                Mint POAP
               </a>
             </div>
           </div>
@@ -111,7 +111,7 @@ export default function Home() {
                 rel="noreferrer"
                 class="poap-airship-button"
               >
-                POAP Airship
+                Mint POAP
               </a>
             </div>
           </div>
