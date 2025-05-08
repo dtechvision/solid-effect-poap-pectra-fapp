@@ -1,9 +1,7 @@
-import { Schema } from "effect";
-import { ManifestSchema, type ManifestType } from "./schema";
-
-// const manifest = {} satisfies ManifestType;
+import type { ManifestType } from "./schema";
 
 // Example of using ManifestType
+// TODO: proper manifest
 export const manifest: ManifestType = {
   accountAssociation: {
     header: "header-value",
@@ -12,10 +10,10 @@ export const manifest: ManifestType = {
   },
   frame: {
     version: "1",
-    name: "My Mini App",
-    homeUrl: new URL("https://example.com"),
-    iconUrl: "https://example.com/icon.png",
-    imageUrl: "https://example.com/image.png",
-    buttonTitle: "Click Me",
+    name: "Pectra POAP",
+    homeUrl: new URL("https://pectra.dtech.vision"),
+    iconUrl: new URL("https://ethereumupgrades.com/assets/img/backgrounds/pectra2.png"),
+    imageUrl: new URL("https://ethereumupgrades.com/assets/img/cover/cover.png"),
+    buttonTitle: "Mint POAP",
   },
 };

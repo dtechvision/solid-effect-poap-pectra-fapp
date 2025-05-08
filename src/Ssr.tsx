@@ -8,6 +8,8 @@ import {
 } from "solid-js/web"
 import { App } from "./App.tsx"
 
+import getFCembed from "./miniapp/embed.ts"
+
 export const SsrNotFoundMagicValue = `<!--ssr-not-found-->`
 
 export const SsrApp = Bundle.renderPromise(
@@ -53,6 +55,8 @@ function Document(props: {
   const jsUrl = props.resolve("client.tsx")
   const cssUrl = props.resolve("App.css")
 
+  const miniAppEmbed = getFCembed();
+
   return (
     <NoHydration>
       {docType}
@@ -64,7 +68,11 @@ function Document(props: {
             name="viewport"
             content="width=device-width, initial-scale=1"
           />
-          <title>solid-deno</title>
+          <title>Pectra Poap Mini App</title>
+
+          {/* Farcaster Mini App Meta Tag */}
+          <meta name="fc:frame" content={miniAppEmbed} />
+          {/* END Farcaster Mini App Meta Tag */} 
 
           <link rel="stylesheet" href={cssUrl} />
         </head>

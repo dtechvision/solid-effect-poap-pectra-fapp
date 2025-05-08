@@ -1,4 +1,23 @@
-export default function Home() {
+import { createEffect, createSignal } from "solid-js";
+import sdk from "@farcaster/frame-sdk";
+import type { Context } from '@farcaster/frame-core';
+
+export default function Home() { 
+  const [isSDKLoaded, setIsSDKLoaded] = createSignal(false);
+  const [context, setContext] = createSignal<Context.FrameContext>();
+
+  // Farcaster Mini App Integration
+  createEffect(() => {
+    const load = async () => {
+      setContext(await sdk.context);
+      sdk.actions.ready();
+    };
+    if (sdk && !isSDKLoaded()) {
+      setIsSDKLoaded(true);
+      load();
+    }
+  });
+  // end Farcaster Mini App Integration
 
   return (
     <div class="mt-10">
@@ -32,12 +51,10 @@ export default function Home() {
             before May 10, 11:59 PM EST
           </p>
           <ul>
-            <li>Payment supported on Arbitrum, Base, Optimism, Ethereum Mainnet</li>
             <li>
               The POAP will be automatically minted on Arbitrum One to the sending
               address within a few minutes
             </li>
-            <li>No wallet connection required</li>
             <li>
               EthStaker is grant-funded and all funds go towards supporting staking
               initiatives
@@ -225,14 +242,14 @@ export default function Home() {
               display: flex;
               justify-content: center;
               flex-wrap: wrap;
-              align-items: center;
+              align-items: stretch;
               gap: 25px;
               margin-bottom: 2rem;
-              flex-wrap: wrap;
             }
 
             .poap-option-card {
               flex: 1;
+              min-width: 280px;
               max-width: 450px;
               border: 1px solid #473e6b !important;
               border-radius: 32px !important;
@@ -250,11 +267,13 @@ export default function Home() {
             .poap-img-wrapper {
               border: 1px solid #eac9f8;
               border-radius: 24px;
-              padding: 16px 24px;
+              padding: 16px;
               background: #f5f4ff;
               display: flex;
-              gap: 0.5rem;
+              gap: 1rem;
+              flex-wrap: wrap;
               justify-content: center;
+              align-items: center;
               margin-bottom: 1rem;
             }
 
@@ -263,8 +282,8 @@ export default function Home() {
             }
 
             .poap-img {
-              width: 120px;
-              height: 120px;
+              width: 100px;
+              height: 100px;
               border-radius: 50%;
               transition: transform 0.2s ease;
             }
@@ -318,14 +337,36 @@ export default function Home() {
               max-width: 200px;
             }
 
-            @media screen and (max-width: 500px) {
+            @media screen and (min-width: 768px) {
+              .poap-img {
+                width: 120px;
+                height: 120px;
+              }
+              
               .poap-img-wrapper {
-                flex-direction: column;
-                align-items: center;
+                padding: 16px 24px;
+              }
+            }
+
+            @media screen and (max-width: 767px) {
+              .poap-section {
+                margin: 1rem;
+              }
+              
+              .poap-options {
+                gap: 16px;
+              }
+
+              .poap-option-card {
+                width: 100%;
+              }
+              
+              .poap-img-wrapper {
+                gap: 0.75rem;
               }
               
               .poap-img-wrapper a:not(:first-child) {
-                margin-top: 1rem;
+                margin-top: 0;
               }
             }
           `}
