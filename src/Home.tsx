@@ -42,7 +42,10 @@ export default function Home() {
 
   const shareCast = async () => {
     sdk.actions.composeCast({
-      text: 'To celebrate the Pectra Mainnet Launch I just minted the new POAP! Get yours too and support ETH Stakers wohoooo! Thanks @gabo and @samuellhuber.eth https://pectra.dtech.vision',
+      text: 'To celebrate the Pectra Mainnet Launch I just minted the new POAP! Get yours too and support ETH Stakers wohoooo! Thanks @gabo and @samuellhuber.eth', 
+      embeds: [
+        "https://pectra.dtech.vision/"
+      ],
       close: true,
     })
   };
