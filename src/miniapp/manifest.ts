@@ -13,7 +13,7 @@ export const manifest: ManifestType = {
     name: "Pectra POAP",
     homeUrl: new URL("https://pectra.dtech.vision"),
     iconUrl: new URL("https://ethereumupgrades.com/assets/img/backgrounds/pectra2.png"),
-    imageUrl: new URL("https://ethereumupgrades.com/assets/img/cover/cover.png"),
+    imageUrl: new URL("https://dtech.vision/tmp/poap.jpg"),
     buttonTitle: "Mint POAP",
   },
 };

@@ -2,7 +2,7 @@ import type { FrameEmbedNext } from "./schema";
 
 const fcMetadata: FrameEmbedNext = {
   version: "next",
-  imageUrl: new URL("https://ethereumupgrades.com/assets/img/cover/cover.png"),
+  imageUrl: new URL("https://dtech.vision/tmp/poap.jpg"),
   button: {
     title: "Mint Pectra POAP",
     action: {
